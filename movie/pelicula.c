@@ -1,96 +1,71 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "pelicula.h"
 
+#define MAX_DIRECTORES 10
 
-/* TODO
-   Definir la estructura Pelicula
+typedef struct pelicula {
+    char *titulo;
+    char *genero;
+    int anio;
+    int numDirectores;
+    char *directores[MAX_DIRECTORES];
+} Pelicula;
 
-   Debe contener:
-   - titulo (cadena dinámica)
-   - anio
-   - genero (cadena dinámica)
-   - arreglo de directores
-   - contador de directores
-*/
-struct Pelicula
-{
-    /* TODO */
-};
-
-
-/* TODO
-   Crear función auxiliar para copiar cadenas
-   usando malloc + strcpy
-*/
-char* copiarCadena(const char* texto)
-{
-    /* TODO */
-
-    return NULL;
+/* Crear función auxiliar para copiar cadenas usando malloc + strcpy*/
+char* copiarCadena(const char* texto) {
+    char *copia = (char*)malloc(strlen(texto) + 1); // +1 para el terminador
+    if (copia != NULL) {
+        strcpy(copia, texto);
+    }
+    return copia;
 }
-
 
 /* Crear película */
-Pelicula* crearPelicula(const char* titulo, int anio, const char* genero)
-{
-    /* TODO
-       1 Reservar memoria para Pelicula
-       2 Copiar titulo
-       3 Copiar genero
-       4 Inicializar anio
-       5 Inicializar contador de directores en 0
-       6 Regresar la película
-    */
-
-    return NULL;
+Pelicula* crearPelicula(const char* titulo, int anio, const char* genero) {
+    Pelicula *p = (Pelicula*)malloc(sizeof(Pelicula));
+    if(p != NULL) {
+        p->titulo = copiarCadena(titulo);
+        p->genero = copiarCadena(genero);
+        p->anio = anio;
+        p->numDirectores = 0; //Aun no hay directores, se inicializa en 0
+    }
+    return p;
 }
-
 
 /* Imprimir película */
-void imprimir(Pelicula* p)
-{
-    /* TODO
-       Imprimir:
-
-       Titulo
-       Año
-       Genero
-       Lista de directores
-    */
+void imprimir(Pelicula* p) {
+    printf("Titulo: %s\n", p->titulo);
+    printf("Año: %d\n", p->anio);
+    printf("Genero: %s\n", p->genero);
+    printf("Directores: %d\n", p->numDirectores);
 }
-
 
 /* Cambiar género */
-void cambiarGenero(Pelicula* p, const char* nuevoGenero)
-{
-    /* TODO
-       1 Liberar el genero anterior
-       2 Copiar nuevoGenero
-    */
+void cambiarGenero(Pelicula* p, const char* nuevoGenero) {
+    if(p != NULL) {
+        free(p->genero); // Liberar el genero anterior
+        p->genero = copiarCadena(nuevoGenero); // Copiar nuevoGenero
+        printf("Genero cambiado a: %s\n", p->genero);
+    }
 }
-
 
 /* Agregar director */
-void agregarDirector(Pelicula* p, const char* director)
-{
-    /* TODO
-       1 Verificar que no exceda MAX_DIRECTORES
-       2 Copiar el nombre del director
-       3 Guardarlo en el arreglo
-       4 Incrementar contador
-    */
+void agregarDirector(Pelicula* p, const char* director) {
+    if(p != NULL && p->numDirectores < MAX_DIRECTORES) {
+        p->directores[p->numDirectores] = copiarCadena(director);
+        p->numDirectores++;
+    } else printf("Son solo 10 directores MAX\n");
 }
 
-
 /* Liberar memoria */
-void destruir(Pelicula* p)
-{
-    /* TODO
-       1 Liberar titulo
-       2 Liberar genero
-       3 Liberar cada director
-       4 Liberar la estructura
-    */
+void destruir(Pelicula* p) {
+    if(p != NULL) {
+        free(p->titulo);
+        free(p->genero);
+        for(int i = 0; i < p->numDirectores; i++) {
+            free(p->directores[i]);
+        }
+        free(p);
+    }
 }
