@@ -3,40 +3,29 @@
 
 int main()
 {
-
     printf("Prueba del TAD Pelicula\n");
 
-    /* TODO
-       Crear una película
-    */
-    Pelicula* p = NULL;
+    /* Crear una película */
+    Pelicula* p = crearPelicula("The Matrix", 1999, "Ciencia Ficcion");
 
+    /* Agregar algunos directores */
+    agregarDirector(p, "Lana Wachowski");
+    agregarDirector(p, "Lilly Wachowski");
 
-    /* TODO
-       Agregar algunos directores
-    */
-
-
-    /* TODO
-       Imprimir película
-    */
-
+    /* Imprimir película */
+    imprimir(p);
 
     printf("\nCambiar genero\n");
 
-    /* TODO
-       Cambiar genero
-    */
+    /* Cambiar genero */
+    cambiarGenero(p, "Accion");
 
+    /* Imprimir nuevamente */
+    imprimir(p);
 
-    /* TODO
-       Imprimir nuevamente
-    */
-
-
-    /* TODO
-       Liberar memoria
-    */
+    /* Liberar memoria */
+    destruir(p);
+    p = NULL;
 
     return 0;
 }
