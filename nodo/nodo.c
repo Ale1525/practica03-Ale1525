@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "nodo.h"
 #include <string.h>
-
+//hola
 Nodo *crearNodo(int valor){
     Nodo *n = (Nodo *)malloc(sizeof(Nodo));
     if (n != NULL){
